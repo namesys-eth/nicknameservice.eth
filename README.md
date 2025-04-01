@@ -1,66 +1,84 @@
-## Foundry
+# NickNameService.eth - Soulbound Nicknames
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A Solidity implementation of fully on-chain soulbound ERC721 NFT for nickname system with SVG metadata. Tag addresses as good, bad, or whatever you want - like Etherscan's tags but fully on-chain and soulbound.
 
-Foundry consists of:
+## Overview
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The NickNameService contract allows users to mint tags as soulbound NFTs for any address. Each tag is associated with a beautiful SVG image that includes:
+- Dynamic color gradients based on the tag
+- Animated scrolling text
+- Modern UI design with rounded corners and shadows
+- Responsive layout
 
-## Documentation
+Unlike Etherscan's tags, these tags are:
+- On-chain and immutable
+- Non-transferable (soulbound)
+- Beautifully visualized as NFTs
+- Private to each user
 
-https://book.getfoundry.sh/
+## Key Features
 
-## Usage
+- **Soulbound NFTs**: Each tag is minted as a unique, non-transferable NFT
+- **Beautiful SVG Metadata**: Dynamic and animated SVG images for each tag
+- **Character Validation**: Only allows 7-bit ASCII characters (0-9, a-z & -)
+- **Length Limits**: Tags must be between 3 and 32 characters
 
-### Build
+## Use Cases
 
-```shell
-$ forge build
+### Address Tagging
+- Tag addresses as good or bad
+- Tag scammers and malicious contracts
+- Tag whatever you want - it's your tag
+
+### Example Scenarios
+```solidity
+// Tag someone as good
+nns.mint(friendAddress, "good-guy");
+
+// Tag someone as bad
+nns.mint(scammerAddress, "scammer");
+
+// Tag whatever you want
+nns.mint(contractAddress, "whatever");
 ```
 
-### Test
+## Smart Contract Structure
 
-```shell
-$ forge test
-```
+The contract implements the following core functionality:
 
-### Format
+- `mint`: Create a new tag NFT
+- `tokenURI`: Get the metadata URI for a tag NFT
+- `getNickname`: Retrieve the tag string for a token ID
+- `tokenByIndex`: Get token ID by index
+- `tokenOfOwnerByIndex`: Get token ID by owner and index
 
-```shell
-$ forge fmt
-```
+## Technical Details
 
-### Gas Snapshots
+The contract includes several technical features:
 
-```shell
-$ forge snapshot
-```
+1. **SVG Generation**: Creates SVG images for each nickname
+2. **Character Validation**: Uses a lookup table for 7-bit ASCII validation
+3. **Metadata Format**: Returns JSON metadata with:
+   - Name
+   - Description
+   - SVG image
+   - Attributes (Nick Name, Length, ENS)
+4. **ERC721 Compliance**: Implements standard NFT interface
 
-### Anvil
+## Design Considerations
 
-```shell
-$ anvil
-```
+- Tags are soulbound (non-transferable)
+- SVG images are generated on-chain
+- Metadata includes length and ENS-style attributes
+- Uses Solady's efficient string and base64 utilities
+- Simple and focused on tagging:
+  - Tag addresses as you want
+  - Same tag can be used for different addresses
 
-### Deploy
+## References
+- Library used : [Vectorized/solady](https://github.com/vectorized/solady) 
+- Inspired by : [An Introduction to Petname Systems](https://web.archive.org/web/20050310160854/http://www.skyhunter.com/marcs/petnames/IntroPetNames.html) by Marc Stiegler, Feb 2005
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+## License
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Copyright © NameSys.eth (WTFPL.ETH)
