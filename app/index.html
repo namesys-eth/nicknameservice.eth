@@ -2,12 +2,224 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nickname Service</title>
+    <link rel="icon" type="image/svg+xml" href="/nns.svg" />
+    <title>Nick Name Service (NNS)</title>
+    <meta name="description" content="A fully on-chain soulbound ERC721 NFT for nickname system with SVG metadata. Tag addresses as good, bad, or whatever you want - like Etherscan's tags but fully on-chain and soulbound." />
+    
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:title" content="Nick Name Service (NNS)" />
+    <meta property="og:description" content="On-chain soulbound nicknames for Ethereum addresses. Tag addresses as good, bad, or whatever you want - fully on-chain and immutable." />
+    <meta property="og:image" content="https://nicknameservice.eth.limo/nns.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://nicknameservice.eth.limo" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nick Name Service (NNS)" />
+    <meta name="twitter:description" content="On-chain soulbound nicknames for Ethereum addresses." />
+    <meta name="twitter:image" content="https://nicknameservice.eth.limo/nns.svg" />
+    <meta name="twitter:creator" content="@namesys_eth" />
+    
+    <!-- Apple Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Nick Name Service" />
+    <link rel="apple-touch-icon" href="/nns.svg" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#5284ff" />
+    <meta name="keywords" content="NFT, ENS, Ethereum, Nickname, Web3, Blockchain, Soulbound, Tag, Address" />
+    <meta name="author" content="NameSys.eth" />
+    
+    <link rel="stylesheet" href="src/styles.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Header Navigation -->
+      <header class="app-header">
+        <div class="header-container">
+          <div class="logo-container">
+            <span class="logo">NNS</span>
+          </div>
+          
+          <nav class="main-nav">
+            <ul class="nav-tabs">
+              <li><a href="#" class="nav-tab active" data-tab="home">Home</a></li>
+              <li><a href="#" class="nav-tab" data-tab="search">Search</a></li>
+              <li><a href="#" class="nav-tab" data-tab="mint">Mint</a></li>
+            </ul>
+          </nav>
+          
+          <div class="user-section">
+            <button id="theme-toggle" class="btn icon-btn">🌙</button>
+            <button id="open-connect-modal" class="btn primary wallet-btn">Connect Wallet</button>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Main Content -->
+      <div class="container">
+        <!-- Home Tab -->
+        <section id="home-tab" class="tab-content active">
+          <div class="hero-section">
+            <div class="logo-banner">
+              <img src="/nns.svg" alt="Nick Name Service Logo" width="120" height="120">
+            </div>
+            <h1>Nick Name Service</h1>
+            <p class="tagline">A soulbound nickname system for tagging Ethereum addresses.</p>
+            
+            <div class="search-section">
+              <input type="text" id="home-search-input" placeholder="Search for a name or address" />
+              <button id="home-search-btn" class="btn primary">Search</button>
+            </div>
+          </div>
+          
+          <div class="info-section">
+            <h2>What is Nick Name Service</h2>
+            <div class="info-content">
+              <p>The NickNameService contract allows users to mint tags as soulbound NFTs for any address. Unlike Etherscan's tags, these tags are on-chain, immutable, and beautifully visualized as NFTs with SVG metadata.</p>
+              
+              <h3>Key Features</h3>
+              <ul>
+                <li><strong>Soulbound NFTs:</strong> Non-transferable tokens that remain attached to the recipient address</li>
+                <li><strong>Beautiful SVG Metadata:</strong> Dynamic color gradients and animated scrolling text</li>
+                <li><strong>Character Validation:</strong> Only allows 7-bit ASCII characters (0-9, a-z & -)</li>
+                <li><strong>Length Limits:</strong> Tags must be between 3 and 32 characters</li>
+                <li><strong>On-chain Storage:</strong> All nicknames and metadata are stored fully on-chain</li>
+              </ul>
+              
+              <h3>Use Cases</h3>
+              <ul>
+                <li><strong>Tag addresses as good:</strong> <code>nns.mint(friendAddress, "good-guy");</code></li>
+                <li><strong>Identify scammers:</strong> <code>nns.mint(scammerAddress, "scammer");</code></li>
+                <li><strong>Create a personal address book:</strong> Tag addresses with memorable names</li>
+                <li><strong>Add reputation:</strong> Build on-chain reputation for addresses</li>
+              </ul>
+              
+              <h3>Technical Details</h3>
+              <ul>
+                <li><strong>ERC721 Implementation:</strong> Standard NFT interface with soulbound properties</li>
+                <li><strong>SVG Generation:</strong> Creates SVG images dynamically for each nickname</li>
+                <li><strong>JSON Metadata:</strong> Includes name, description, SVG image, and attributes</li>
+                <li><strong>Base Chain Deployment:</strong> Running on Base for lower gas costs</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Search Tab -->
+        <section id="search-tab" class="tab-content">
+          <div class="section-header">
+            <h2>Search Names & Addresses</h2>
+            <p class="section-description">Look up nicknames by address or ENS name</p>
+          </div>
+          
+          <div class="search-section large">
+            <input type="text" id="search-input" placeholder="Enter address or ENS domain (.eth)" />
+            <button id="search-btn" class="btn primary">Search</button>
+          </div>
+          
+          <div id="search-results" class="search-results">
+            <div class="address-info">
+              <div class="address-details">
+                <div class="address">Address: <span id="display-address">-</span></div>
+                <div class="ens">ENS: <span id="display-ens">-</span></div>
+              </div>
+              <div class="nicknames-list">
+                <h3>Nicknames</h3>
+                <div id="nicknames-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Mint Tab -->
+        <section id="mint-tab" class="tab-content">
+          <div class="section-header">
+            <h2>Mint a Nickname</h2>
+            <p class="section-description">Create a permanent on-chain nickname for any address</p>
+          </div>
+          
+          <div id="mint-form" class="mint-form-container">
+            <div class="input-group">
+              <label for="recipient-input">Recipient Address or ENS</label>
+              <input type="text" id="recipient-input" placeholder="0x... or name.eth" />
+              <div class="input-note">Address that will receive this nickname</div>
+            </div>
+            
+            <div class="input-group">
+              <label for="nickname-input">Nickname</label>
+              <input type="text" id="nickname-input" placeholder="Enter nickname (a-z, 0-9, -)" />
+              <div class="input-note">3-32 characters, lowercase letters, numbers, and hyphens only</div>
+            </div>
+            
+            <div class="preview-section">
+              <div class="preview-label">Preview:</div>
+              <div id="nickname-preview" class="nickname-preview">nickname-preview</div>
+            </div>
+            
+            <button id="set-nickname" class="btn primary">Mint Nickname</button>
+            <div class="mint-status" id="mint-status"></div>
+          </div>
+          
+          <div id="mint-wallet-notice" class="wallet-notice">
+            <div class="notice-icon">🔐</div>
+            <h3>Connect Your Wallet</h3>
+            <p>You need to connect your wallet to mint a nickname</p>
+            <button id="mint-connect-btn" class="btn primary">Connect Wallet</button>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Nick Name Service</h4>
+            <p>Soulbound on-chain nicknames for Ethereum addresses</p>
+          </div>
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="https://github.com/namesys-eth/nicknameservice.eth" target="_blank">GitHub Repository</a></li>
+              <li><a href="https://github.com/vectorized/solady" target="_blank">Solady Library</a></li>
+              <li><a href="https://basescan.org/address/0x0000000000282691831b618a23b31042ee07c6c6" target="_blank">Contract on Basescan</a></li>
+              <li><a href="https://web.archive.org/web/20050310160854/http://www.skyhunter.com/marcs/petnames/IntroPetNames.html" target="_blank">Petname Systems</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Connect</h4>
+            <ul>
+              <li><a href="https://etherscan.io/address/namesys.eth" target="_blank">NameSys.eth</a></li>
+              <li><a href="https://twitter.com/namesys_eth" target="_blank">Twitter</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>Copyright © NameSys.eth (WTFPL.ETH) | Built on Base Chain</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Modal Component -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title">Message</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-message"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-confirm" class="btn primary">OK</button>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
